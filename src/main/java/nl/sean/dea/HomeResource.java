@@ -12,6 +12,6 @@ public class HomeResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHomePage() {
-        return Response.ok("Hello world").build();
+        return Response.ok("Hello world!").build();
     }
 }

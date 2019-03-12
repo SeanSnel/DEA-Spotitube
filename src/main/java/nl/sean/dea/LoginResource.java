@@ -7,15 +7,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/login")
+@Path("login")
 public class LoginResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(User user) {
+    public Response logUserIn(UserDTO user) {
         if ("Sean".equals(user.getUsername()) && "test".equals(user.getPassword())) {
-            return Response.ok(new Login(user.getUsername(), "1234")).build();
+            return Response.ok(new TokenDTO(user.getUsername(), "1234")).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

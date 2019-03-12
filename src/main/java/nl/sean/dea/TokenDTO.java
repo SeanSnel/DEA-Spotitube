@@ -1,13 +1,13 @@
 package nl.sean.dea;
 
-public class Login {
-    private String user;
+public class TokenDTO {
     private String token;
+    private String user;
 
-    public Login() {
+    public TokenDTO() {
     }
 
-    public Login(String user, String token) {
+    public TokenDTO(String user, String token) {
         this.user = user;
         this.token = token;
     }
