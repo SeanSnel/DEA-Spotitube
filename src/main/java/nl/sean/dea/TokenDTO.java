@@ -8,8 +8,8 @@ public class TokenDTO {
     }
 
     public TokenDTO(String user, String token) {
-        this.user = user;
         this.token = token;
+        this.user = user;
     }
 
     public String getUser() {
