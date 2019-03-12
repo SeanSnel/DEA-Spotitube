@@ -14,8 +14,8 @@ public class LoginResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response logUserIn(UserDTO user) {
-        if ("Sean".equals(user.getUsername()) && "test".equals(user.getPassword())) {
-            return Response.ok(new TokenDTO(user.getUsername(), "1234")).build();
+        if ("Sean".equals(user.getUser()) && "test".equals(user.getPassword())) {
+            return Response.ok(new TokenDTO(user.getUser(), "1234")).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

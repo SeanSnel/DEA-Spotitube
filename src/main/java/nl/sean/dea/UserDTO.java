@@ -12,11 +12,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getUsername() {
+    public String getUser() {
         return user;
     }
 
-    public void setUsername(String username) {
+    public void setUser(String username) {
         this.user = username;
     }
 
