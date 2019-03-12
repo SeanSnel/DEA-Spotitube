@@ -1,11 +1,20 @@
 package nl.sean.dea;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist {
     private int id;
     private String name;
     private boolean owner;
+    private List<Track> tracks;
+
+    public Playlist(int id, String name, boolean owner) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.tracks = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -38,6 +47,4 @@ public class Playlist {
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
-
-    private List<Track> tracks;
 }
