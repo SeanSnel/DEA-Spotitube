@@ -17,7 +17,7 @@ public class LoginResource {
         if ("Sean".equals(user.getUser()) && "test".equals(user.getPassword())) {
             return Response.ok(new TokenDTO(user.getUser(), "1234")).build();
         } else {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorDTO("Wrong user/password combination.")).build();
         }
     }
 }

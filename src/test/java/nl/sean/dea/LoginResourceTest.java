@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoginResourceTest {
     private LoginResource sut;
@@ -21,7 +21,20 @@ class LoginResourceTest {
         Response actualResult = sut.logUserIn(user);
 
         assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
+
+        TokenDTO tokenDTO = (TokenDTO) actualResult.getEntity();
+        assertEquals("Sean", tokenDTO.getUser());
+        assertEquals("1234", tokenDTO.getToken());
     }
 
+    @Test
+    void loginFail() {
+        UserDTO user = new UserDTO("Sean", "wrongPassword");
+        Response actualResult = sut.logUserIn(user);
 
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), actualResult.getStatus());
+
+        ErrorDTO errorDTO = (ErrorDTO) actualResult.getEntity();
+        assertEquals("Wrong user/password combination.", errorDTO.getMessage());
+    }
 }
