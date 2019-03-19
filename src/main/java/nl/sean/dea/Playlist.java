@@ -9,11 +9,11 @@ public class Playlist {
     private boolean owner;
     private List<Track> tracks;
 
-    public Playlist(int id, String name, boolean owner) {
+    public Playlist(int id, String name, boolean owner, ArrayList<Track> tracks) {
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.tracks = new ArrayList<>();
+        this.tracks = tracks;
     }
 
     public int getId() {
