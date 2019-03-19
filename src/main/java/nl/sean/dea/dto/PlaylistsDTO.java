@@ -1,4 +1,6 @@
-package nl.sean.dea;
+package nl.sean.dea.dto;
+
+import nl.sean.dea.Playlist;
 
 import java.util.List;
 

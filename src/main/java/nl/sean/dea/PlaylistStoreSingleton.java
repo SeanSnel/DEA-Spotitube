@@ -1,5 +1,7 @@
 package nl.sean.dea;
 
+import nl.sean.dea.dto.PlaylistsDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
