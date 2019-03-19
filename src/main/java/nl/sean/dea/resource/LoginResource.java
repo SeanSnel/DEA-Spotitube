@@ -1,4 +1,8 @@
-package nl.sean.dea;
+package nl.sean.dea.resource;
+
+import nl.sean.dea.dto.ErrorDTO;
+import nl.sean.dea.dto.TokenDTO;
+import nl.sean.dea.dto.UserDTO;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

@@ -1,4 +1,4 @@
-package nl.sean.dea;
+package nl.sean.dea.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

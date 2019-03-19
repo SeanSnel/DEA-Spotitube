@@ -1,5 +1,6 @@
 package nl.sean.dea;
 
+import nl.sean.dea.resource.HomeResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

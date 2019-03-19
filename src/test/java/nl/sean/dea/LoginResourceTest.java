@@ -1,5 +1,9 @@
 package nl.sean.dea;
 
+import nl.sean.dea.dto.ErrorDTO;
+import nl.sean.dea.dto.TokenDTO;
+import nl.sean.dea.dto.UserDTO;
+import nl.sean.dea.resource.LoginResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
