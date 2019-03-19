@@ -1,4 +1,7 @@
-package nl.sean.dea;
+package nl.sean.dea.dao;
+
+import nl.sean.dea.ConnectionFactory;
+import nl.sean.dea.dto.UserDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +14,7 @@ public class UserDAO {
         try (
                 Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM user WHERE Username=? AND Password=?");
+                        "SELECT * FROM user WHERE Username=? AND Password=?")
         ) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);

@@ -1,6 +1,6 @@
-package nl.sean.dea;
+package nl.sean.dea.dto;
 
-public class Track {
+public class TrackDTO {
     private int id;
     private String title;
     private String performer;
@@ -11,7 +11,7 @@ public class Track {
     private String description;
     private boolean offlineAvailable;
 
-    public Track(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
+    public TrackDTO(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
         this.id = id;
         this.title = title;
         this.performer = performer;
