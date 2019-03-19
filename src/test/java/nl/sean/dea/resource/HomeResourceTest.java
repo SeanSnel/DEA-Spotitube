@@ -1,4 +1,4 @@
-package nl.sean.dea;
+package nl.sean.dea.resource;
 
 import nl.sean.dea.resource.HomeResource;
 import org.junit.jupiter.api.BeforeEach;
