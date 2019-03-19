@@ -1,4 +1,4 @@
-package nl.sean.dea;
+package nl.sean.dea.dto;
 
 public class UserDTO {
     private String user;
