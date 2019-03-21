@@ -1,31 +1,59 @@
 package nl.sean.dea;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
+import static java.lang.System.getProperty;
 
 public class ConnectionFactory {
 
-    public static final String MYSQL_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String MYSQL_URL = "jdbc:mysql://localhost:3306/spotitube?useSSL=false&serverTimezone=UTC";
-    public static final String DB_USER = "root";
-    public static final String DB_PASS = "spotitube";
+    private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/spotitube?useSSL=false&serverTimezone=UTC";
+    private static final String MYSQL_USER = "root";
+    private static final String MYSQL_PASSWORD = "spotitube";
 
-    static {
+    private Properties properties;
+
+    public ConnectionFactory() {
+        properties = getProperties();
+    }
+
+    private Properties getProperties() {
+        Properties properties = new Properties();
+        String propertiesPath = getClass().getClassLoader().getResource("").getPath() + "database.properties";
         try {
-            Class.forName(MYSQL_JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
+            FileInputStream fileInputStream = new FileInputStream(propertiesPath);
+            properties.load(fileInputStream);
+        } catch (IOException e) {
+            properties.setProperty("db.url", MYSQL_URL);
+            properties.setProperty("db.user", MYSQL_USER);
+            properties.setProperty("db.password", MYSQL_PASSWORD);
+            properties.setProperty("db.driver", MYSQL_DRIVER);
             e.printStackTrace();
         }
+        return properties;
     }
 
     public Connection getConnection() {
+        loadDriver();
         try {
-            return DriverManager.getConnection(MYSQL_URL,
-                    DB_USER,
-                    DB_PASS);
+            return DriverManager.getConnection(properties.getProperty("db.url"),
+                    properties.getProperty("db.user"),
+                    properties.getProperty("db.password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void loadDriver() {
+        try {
+            Class.forName(properties.getProperty("db.driver"));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
