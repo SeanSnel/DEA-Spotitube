@@ -1,4 +1,9 @@
 package nl.sean.dea.service;
 
-public class PlaylistService {
+import nl.sean.dea.dto.PlaylistDTO;
+import nl.sean.dea.dto.PlaylistsDTO;
+
+public interface PlaylistService {
+    PlaylistsDTO getAllPlaylists();
+    PlaylistDTO getPlaylist(int playlistID);
 }
