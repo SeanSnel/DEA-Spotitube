@@ -1,6 +1,5 @@
 package nl.sean.dea.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDTO {
@@ -9,11 +8,19 @@ public class PlaylistDTO {
     private boolean owner;
     private List<TrackDTO> tracks;
 
-    public PlaylistDTO(int id, String name, boolean owner, ArrayList<TrackDTO> tracks) {
+    public PlaylistDTO(int id, String name, boolean owner, List<TrackDTO> tracks) {
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.tracks = tracks;
+    }
+
+    public int getDuration() {
+        int duration = 0;
+        for (TrackDTO track : tracks) {
+            duration += track.getDuration();
+        }
+        return duration;
     }
 
     public int getId() {

@@ -1,6 +1,4 @@
-package nl.sean.dea;
-
-import nl.sean.dea.persistence.SpotitubePersistenceException;
+package nl.sean.dea.persistence;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,7 +9,7 @@ import java.util.Properties;
 
 public class ConnectionFactory {
 
-    private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/spotitube?useSSL=false&serverTimezone=UTC";
     private static final String MYSQL_USER = "root";
     private static final String MYSQL_PASSWORD = "spotitube";

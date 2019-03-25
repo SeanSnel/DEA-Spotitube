@@ -1,6 +1,5 @@
 package nl.sean.dea.persistence;
 
-import nl.sean.dea.ConnectionFactory;
 import nl.sean.dea.dto.UserDTO;
 
 import javax.enterprise.inject.Default;
