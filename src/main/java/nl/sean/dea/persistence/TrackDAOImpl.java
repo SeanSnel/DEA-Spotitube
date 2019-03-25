@@ -24,7 +24,7 @@ public class TrackDAOImpl implements TrackDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             foundTracks = getTracksFromResultset(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new SpotitubePersistenceException();
         }
         return new TracksDTO(foundTracks);
     }
@@ -41,7 +41,7 @@ public class TrackDAOImpl implements TrackDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             foundTracks = getTracksFromResultset(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new SpotitubePersistenceException();
         }
         return new TracksDTO(foundTracks);
     }

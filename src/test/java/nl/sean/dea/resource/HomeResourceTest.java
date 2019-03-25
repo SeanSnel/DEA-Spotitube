@@ -1,12 +1,11 @@
 package nl.sean.dea.resource;
 
-import nl.sean.dea.resource.HomeResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HomeResourceTest {
 

@@ -39,13 +39,13 @@ public class PlaylistDAOImpl implements PlaylistDAO {
                 foundPlaylist = new PlaylistDTO(resultSet.getInt("playlist_ID"), resultSet.getString("name"), resultSet.getBoolean("owner"), trackDAO.getAllTracksFromPlaylist(resultSet.getInt("playlist_ID")).getTracks());
             }
         } catch (SQLException e) {
-            throw new SpotitubePersistenceException("No connection could be established.");
+            throw new SpotitubePersistenceException();
         }
         return foundPlaylist;
     }
 
     @Override
-    public PlaylistsDTO getAllPlaylists() {
+    public PlaylistsDTO getAllPlaylists(String username) {
         List<PlaylistDTO> foundPlaylists = new ArrayList<>();
         try (
                 Connection connection = new ConnectionFactory().getConnection();
@@ -57,9 +57,8 @@ public class PlaylistDAOImpl implements PlaylistDAO {
                 foundPlaylists.add(new PlaylistDTO(resultSet.getInt("playlist_ID"), resultSet.getString("name"), resultSet.getBoolean("owner"), trackDAO.getAllTracksFromPlaylist(resultSet.getInt("playlist_ID")).getTracks()));
             }
         } catch (SQLException e) {
-            throw new SpotitubePersistenceException("No connection could be established.");
+            throw new SpotitubePersistenceException();
         }
         return new PlaylistsDTO(foundPlaylists, 0);
-
     }
 }

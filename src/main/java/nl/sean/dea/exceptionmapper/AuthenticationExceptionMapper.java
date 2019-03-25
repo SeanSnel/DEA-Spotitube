@@ -8,7 +8,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class LoginExceptionMapper implements ExceptionMapper<SpotitubeAuthenticationException> {
+public class AuthenticationExceptionMapper implements ExceptionMapper<SpotitubeAuthenticationException> {
 
     @Override
     public Response toResponse(SpotitubeAuthenticationException exception) {
