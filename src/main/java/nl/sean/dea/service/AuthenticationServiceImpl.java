@@ -1,6 +1,6 @@
 package nl.sean.dea.service;
 
-import nl.sean.dea.dao.UserDAO;
+import nl.sean.dea.persistence.UserDAO;
 import nl.sean.dea.dto.TokenDTO;
 import nl.sean.dea.dto.UserDTO;
 
@@ -22,6 +22,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenDTO login(UserDTO user) {
-        return new TokenDTO(user.getUser(), "1234");
+        UserDTO foundUser = userDAO.getUser(user.getUser(), user.getPassword());
+        if(foundUser != null){
+            return new TokenDTO(foundUser.getUser(), "1234");
+        }
+        throw new SpotitubeAuthenticationException("invalid user.");
     }
 }

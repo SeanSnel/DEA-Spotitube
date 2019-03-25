@@ -1,4 +1,4 @@
-package nl.sean.dea.dao;
+package nl.sean.dea.persistence;
 
 import nl.sean.dea.dto.UserDTO;
 
