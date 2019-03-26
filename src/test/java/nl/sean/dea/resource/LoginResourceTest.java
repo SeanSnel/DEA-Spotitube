@@ -30,7 +30,7 @@ class LoginResourceTest {
         UserDTO user = new UserDTO("Sean", "test");
         when(authenticationService.login(user)).thenReturn(new TokenDTO("Sean", "1234"));
 
-        Response actualResult = sut.logUserIn(user);
+        Response actualResult = sut.loginUser(user);
 
         assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
         TokenDTO tokenDTO = (TokenDTO) actualResult.getEntity();
@@ -43,7 +43,7 @@ class LoginResourceTest {
         when(authenticationService.login(any(UserDTO.class))).thenThrow(new SpotitubeAuthenticationException("Invalid user."));
 
         SpotitubeAuthenticationException spotitubeAuthenticationException = assertThrows(SpotitubeAuthenticationException.class, () -> {
-            Response actualResult = sut.logUserIn(new UserDTO("Sean", "wrongPassword"));
+            Response actualResult = sut.loginUser(new UserDTO("Sean", "wrongPassword"));
         });
 
         assertEquals("Invalid user.", spotitubeAuthenticationException.getMessage());

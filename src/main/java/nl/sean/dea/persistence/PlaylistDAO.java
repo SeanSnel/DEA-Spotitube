@@ -7,4 +7,8 @@ public interface PlaylistDAO {
     PlaylistDTO getPlaylist(String username, int playlistID);
 
     PlaylistsDTO getAllPlaylists(String username);
+
+    PlaylistsDTO deletePlaylist(String username, int playlistID);
+
+    PlaylistsDTO addPlaylist(String username, PlaylistDTO playlist);
 }

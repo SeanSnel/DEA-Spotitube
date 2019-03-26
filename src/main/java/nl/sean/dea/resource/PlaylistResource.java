@@ -1,5 +1,6 @@
 package nl.sean.dea.resource;
 
+import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.TokenDTO;
 import nl.sean.dea.service.AuthenticationService;
 import nl.sean.dea.service.PlaylistService;
@@ -30,8 +31,8 @@ public class PlaylistResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPlaylists(@QueryParam("token") String token) {
-        TokenDTO user = authenticationService.checkToken(token);
-        return Response.ok(playlistService.getAllPlaylists(user.getUser())).build();
+        TokenDTO userToken = authenticationService.checkToken(token);
+        return Response.ok(playlistService.getAllPlaylists(userToken.getUser())).build();
     }
 
     @GET
@@ -39,5 +40,19 @@ public class PlaylistResource {
     public Response getTracksFromPlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token) {
         authenticationService.checkToken(token);
         return Response.ok(trackService.getAllTracksFromPlaylist(playlistID)).build();
+    }
+
+    @DELETE
+    @Path("playlists/{id}")
+    public Response deletePlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token){
+        TokenDTO userToken = authenticationService.checkToken(token);
+        return Response.ok(playlistService.deletePlaylist(userToken.getUser(), playlistID)).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addPlaylist(PlaylistDTO playlist, String token){
+        TokenDTO userToken = authenticationService.checkToken(token);
+        return Response.status(Response.Status.CREATED).entity(playlistService.addPlaylist(userToken.getUser(), playlist)).build();
     }
 }

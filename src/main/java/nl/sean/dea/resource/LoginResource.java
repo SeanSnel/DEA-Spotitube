@@ -27,7 +27,7 @@ public class LoginResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logUserIn(UserDTO user) {
+    public Response loginUser(UserDTO user) {
         return Response.ok(authenticationService.login(user)).build();
     }
 }
