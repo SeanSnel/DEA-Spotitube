@@ -22,8 +22,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public PlaylistsDTO getAllPlaylists() {
-        PlaylistsDTO playlistsDTO = playlistDAO.getAllPlaylists();
+    public PlaylistsDTO getAllPlaylists(String username) {
+        PlaylistsDTO playlistsDTO = playlistDAO.getAllPlaylists(username);
         playlistsDTO.setLength(calculateTotalDuration(playlistsDTO.getPlaylists()));
         return playlistsDTO;
     }
@@ -37,7 +37,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public PlaylistDTO getPlaylist(int playlistID) {
-        return playlistDAO.getPlaylist(playlistID);
+    public PlaylistDTO getPlaylist(String username, int playlistID) {
+        return playlistDAO.getPlaylist(username, playlistID);
     }
 }

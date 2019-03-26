@@ -4,7 +4,7 @@ import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.PlaylistsDTO;
 
 public interface PlaylistService {
-    PlaylistsDTO getAllPlaylists();
+    PlaylistsDTO getAllPlaylists(String username);
 
-    PlaylistDTO getPlaylist(int playlistID);
+    PlaylistDTO getPlaylist(String username, int playlistID);
 }

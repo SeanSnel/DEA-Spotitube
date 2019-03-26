@@ -31,7 +31,7 @@ public class PlaylistResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPlaylists(@QueryParam("token") String token) {
         TokenDTO user = authenticationService.checkToken(token);
-        return Response.ok(playlistService.getAllPlaylists()).build();
+        return Response.ok(playlistService.getAllPlaylists(user.getUser())).build();
     }
 
     @GET
