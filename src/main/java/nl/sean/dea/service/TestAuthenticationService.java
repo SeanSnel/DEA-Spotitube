@@ -11,4 +11,9 @@ public class TestAuthenticationService implements AuthenticationService {
     public TokenDTO login(UserDTO user) {
         return new TokenDTO(user.getUser(), "1234");
     }
+
+    @Override
+    public TokenDTO checkToken(String token) {
+        return null;
+    }
 }

@@ -26,7 +26,7 @@ public class PlaylistDAOImpl implements PlaylistDAO {
     }
 
     @Override
-    public PlaylistDTO getPlaylist(int playlistID) {
+    public PlaylistDTO getPlaylist(String username, int playlistID) {
         PlaylistDTO foundPlaylist = null;
         try (
                 Connection connection = new ConnectionFactory().getConnection();
