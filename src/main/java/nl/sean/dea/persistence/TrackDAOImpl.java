@@ -46,6 +46,27 @@ public class TrackDAOImpl implements TrackDAO {
         return new TracksDTO(foundTracks);
     }
 
+    @Override
+    public void addTracksToPlaylist(List<TrackDTO> tracks, int playlistID) {
+        StringBuilder query = new StringBuilder("INSERT INTO track_in_playlist(track_ID, playlist_ID) VALUES");
+        for (TrackDTO track : tracks) {
+            query.append("(");
+            query.append(track.getId());
+            query.append(",");
+            query.append(playlistID);
+            query.append(")");
+        }
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        query.toString())
+        ) {
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+    }
+
     private List<TrackDTO> getTracksFromResultset(ResultSet resultSet) throws SQLException {
         List<TrackDTO> foundTracks = new ArrayList<>();
 

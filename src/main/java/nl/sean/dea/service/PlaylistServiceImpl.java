@@ -40,4 +40,14 @@ public class PlaylistServiceImpl implements PlaylistService {
     public PlaylistDTO getPlaylist(String username, int playlistID) {
         return playlistDAO.getPlaylist(username, playlistID);
     }
+
+    @Override
+    public PlaylistsDTO deletePlaylist(String username, int playlistID) {
+        return playlistDAO.deletePlaylist(username, playlistID);
+    }
+
+    @Override
+    public PlaylistsDTO addPlaylist(String username, PlaylistDTO playlist) {
+        return playlistDAO.addPlaylist(username, playlist);
+    }
 }

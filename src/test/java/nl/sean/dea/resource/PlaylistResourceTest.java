@@ -36,7 +36,6 @@ class PlaylistResourceTest {
     private PlaylistResource sut;
 
     private final String VALID_TOKEN = "1234";
-    private final String INVALID_TOKEN = "12345";
     private final TrackDTO testTrack = new TrackDTO(1, "test", "test", 1, "test", 1, "1990-01-01", "test", true);
     private final TracksDTO testTracklist = new TracksDTO(new ArrayList<>(Collections.singletonList(testTrack)));
     private final PlaylistDTO testPlaylist = new PlaylistDTO(1, "Testlist", true, testTracklist.getTracks());
