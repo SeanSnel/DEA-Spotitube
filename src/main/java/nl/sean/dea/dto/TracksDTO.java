@@ -1,21 +1,19 @@
 package nl.sean.dea.dto;
 
-import nl.sean.dea.Track;
-
 import java.util.List;
 
 public class TracksDTO {
-    private List<Track> tracks;
+    private List<TrackDTO> tracks;
 
-    public TracksDTO(List<Track> tracks) {
+    public TracksDTO(List<TrackDTO> tracks) {
         this.tracks = tracks;
     }
 
-    public List<Track> getTracks() {
+    public List<TrackDTO> getTracks() {
         return tracks;
     }
 
-    public void setTracks(List<Track> tracks) {
+    public void setTracks(List<TrackDTO> tracks) {
         this.tracks = tracks;
     }
 }

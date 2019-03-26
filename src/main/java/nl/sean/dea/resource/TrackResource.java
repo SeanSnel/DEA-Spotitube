@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 public class TrackResource {
 
     @GET
-    public Response getAllTracks(){
+    public Response getAllTracks() {
         return Response.ok().build();
     }
 }
