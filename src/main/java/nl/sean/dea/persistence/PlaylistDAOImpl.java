@@ -97,4 +97,21 @@ public class PlaylistDAOImpl implements PlaylistDAO {
         }
         return getAllPlaylists(username);
     }
+
+    @Override
+    public PlaylistsDTO editPlaylist(String username, PlaylistDTO playlist) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE playlist SET name=? AND owner=? WHERE playlist_ID=?")
+        ) {
+            preparedStatement.setString(1, playlist.getName());
+            preparedStatement.setBoolean(2, playlist.isOwner());
+            preparedStatement.execute();
+            trackDAO.updateTracksFromPlaylist(playlist);
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return getAllPlaylists(username);
+    }
 }

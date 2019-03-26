@@ -1,5 +1,6 @@
 package nl.sean.dea.persistence;
 
+import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.TrackDTO;
 import nl.sean.dea.dto.TracksDTO;
 
@@ -11,4 +12,6 @@ public interface TrackDAO {
     TracksDTO getAllTracksFromPlaylist(int playlistID);
 
     void addTracksToPlaylist(List<TrackDTO> tracks, int insertedID);
+
+    void updateTracksFromPlaylist(PlaylistDTO playlist);
 }
