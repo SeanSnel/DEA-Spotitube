@@ -52,7 +52,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public PlaylistsDTO editPlaylist(String username, PlaylistDTO playlist) {
-        return playlistDAO.editPlaylist(username, playlist);
+    public PlaylistsDTO editPlaylist(String username, int playlistID, PlaylistDTO changedPlaylist) {
+        return playlistDAO.editPlaylist(username, playlistID, changedPlaylist);
     }
 }

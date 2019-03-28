@@ -12,5 +12,5 @@ public interface PlaylistDAO {
 
     PlaylistsDTO addPlaylist(String username, PlaylistDTO playlist);
 
-    PlaylistsDTO editPlaylist(String username, PlaylistDTO playlist);
+    PlaylistsDTO editPlaylist(String username, int playlistID, PlaylistDTO changedPlaylist);
 }

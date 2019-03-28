@@ -44,7 +44,7 @@ public class PlaylistResource {
     }
 
     @DELETE
-    @Path("playlists/{id}")
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token){
@@ -61,10 +61,11 @@ public class PlaylistResource {
     }
 
     @PUT
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editPlaylist(PlaylistDTO playlist, @QueryParam("token") String token){
+    public Response editPlaylist(@PathParam("id") int playlistID, PlaylistDTO changedPlaylist, @QueryParam("token") String token){
         TokenDTO userToken = authenticationService.checkToken(token);
-        return Response.ok(playlistService.editPlaylist(userToken.getUser(), playlist)).build();
+        return Response.ok(playlistService.editPlaylist(userToken.getUser(), playlistID, changedPlaylist)).build();
     }
 }
