@@ -8,6 +8,9 @@ public class PlaylistDTO {
     private boolean owner;
     private List<TrackDTO> tracks;
 
+    public PlaylistDTO() {
+    }
+
     public PlaylistDTO(int id, String name, boolean owner, List<TrackDTO> tracks) {
         this.id = id;
         this.name = name;
