@@ -37,13 +37,16 @@ public class PlaylistResource {
 
     @GET
     @Path("{id}/tracks")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getTracksFromPlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token) {
         authenticationService.checkToken(token);
         return Response.ok(trackService.getAllTracksFromPlaylist(playlistID)).build();
     }
 
     @DELETE
-    @Path("playlists/{id}")
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deletePlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token){
         TokenDTO userToken = authenticationService.checkToken(token);
         return Response.ok(playlistService.deletePlaylist(userToken.getUser(), playlistID)).build();
@@ -51,8 +54,18 @@ public class PlaylistResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPlaylist(PlaylistDTO playlist, String token){
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPlaylist(PlaylistDTO playlist, @QueryParam("token") String token){
         TokenDTO userToken = authenticationService.checkToken(token);
         return Response.status(Response.Status.CREATED).entity(playlistService.addPlaylist(userToken.getUser(), playlist)).build();
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editPlaylist(@PathParam("id") int playlistID, PlaylistDTO changedPlaylist, @QueryParam("token") String token){
+        TokenDTO userToken = authenticationService.checkToken(token);
+        return Response.ok(playlistService.editPlaylist(userToken.getUser(), playlistID, changedPlaylist)).build();
     }
 }

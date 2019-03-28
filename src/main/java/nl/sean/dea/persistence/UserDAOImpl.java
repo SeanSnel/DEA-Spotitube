@@ -46,24 +46,57 @@ public class UserDAOImpl implements UserDAO {
                 foundUser = new TokenDTO(resultSet.getString("username"), token);
             }
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new SpotitubePersistenceException();
         }
         return foundUser;
     }
 
     @Override
-    public TokenDTO registerToken(String user, String token) {
+    public TokenDTO registerToken(String username, String token) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM user_token WHERE username=?")
+        ) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return updateExistingTokenUser(username, token);
+            } else {
+                return insertTokenForNewUser(username, token);
+            }
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+    }
+
+    private TokenDTO updateExistingTokenUser(String username, String token) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE user_token SET token=? WHERE username=?")
+        ) {
+            preparedStatement.setString(1, token);
+            preparedStatement.setString(2, username);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return new TokenDTO(username,token);
+    }
+
+    private TokenDTO insertTokenForNewUser(String username, String token) {
         try (
                 Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "INSERT INTO user_token(username, token) VALUES (?,?)")
         ) {
-            preparedStatement.setString(1, user);
+            preparedStatement.setString(1, username);
             preparedStatement.setString(2, token);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new SpotitubePersistenceException();
         }
-        return new TokenDTO(user, token);
+        return new TokenDTO(username, token);
     }
 }

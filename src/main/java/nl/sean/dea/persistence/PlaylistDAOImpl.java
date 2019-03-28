@@ -75,6 +75,7 @@ public class PlaylistDAOImpl implements PlaylistDAO {
                         "DELETE FROM playlist WHERE playlist_ID=?")
         ) {
             preparedStatement.setInt(1, playlistID);
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new SpotitubePersistenceException();
         }
@@ -91,7 +92,25 @@ public class PlaylistDAOImpl implements PlaylistDAO {
             insertPlaylistStatement.setString(1, playlist.getName());
             insertPlaylistStatement.setString(2, username);
             int insertedID = insertPlaylistStatement.executeUpdate();
-            trackDAO.addTracksToPlaylist(playlist.getTracks(), insertedID);
+            if (playlist.getTracks() != null) {
+                trackDAO.addTracksToPlaylist(playlist.getTracks(), insertedID);
+            }
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return getAllPlaylists(username);
+    }
+
+    @Override
+    public PlaylistsDTO editPlaylist(String username, int playlistID, PlaylistDTO changedPlaylist) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE playlist SET name=? WHERE playlist_ID=?")
+        ) {
+            preparedStatement.setString(1, changedPlaylist.getName());
+            preparedStatement.setInt(2, playlistID);
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new SpotitubePersistenceException();
         }

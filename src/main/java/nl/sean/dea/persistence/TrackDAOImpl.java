@@ -1,5 +1,6 @@
 package nl.sean.dea.persistence;
 
+import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.TrackDTO;
 import nl.sean.dea.dto.TracksDTO;
 
@@ -65,6 +66,11 @@ public class TrackDAOImpl implements TrackDAO {
         } catch (SQLException e) {
             throw new SpotitubePersistenceException();
         }
+    }
+
+    @Override
+    public void updateTracksFromPlaylist(PlaylistDTO playlist) {
+        // TODO: implement update tracks
     }
 
     private List<TrackDTO> getTracksFromResultset(ResultSet resultSet) throws SQLException {

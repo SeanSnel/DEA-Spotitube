@@ -11,4 +11,6 @@ public interface PlaylistService {
     PlaylistsDTO deletePlaylist(String username, int playlistID);
 
     PlaylistsDTO addPlaylist(String username, PlaylistDTO playlist);
+
+    PlaylistsDTO editPlaylist(String username, int playlistID, PlaylistDTO changedPlaylist);
 }
