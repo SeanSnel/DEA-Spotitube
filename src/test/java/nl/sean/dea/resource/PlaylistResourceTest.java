@@ -41,11 +41,12 @@ class PlaylistResourceTest {
     private final PlaylistDTO testPlaylist = new PlaylistDTO(1, "Testlist", true, testTracklist.getTracks());
     private final int testLength = 10;
     private final PlaylistsDTO testPlaylistsDTO = new PlaylistsDTO(new ArrayList<>(Collections.singletonList(testPlaylist)), testLength);
+    private final TokenDTO testToken = new TokenDTO("Sean", VALID_TOKEN);
+
 
     @Test
     void getAllPlaylistsSuccess() {
-        TokenDTO tokenDTO = new TokenDTO("Sean", VALID_TOKEN);
-        when(authenticationService.checkToken(any())).thenReturn(tokenDTO);
+        when(authenticationService.checkToken(any())).thenReturn(testToken);
         when(playlistService.getAllPlaylists(any())).thenReturn(testPlaylistsDTO);
 
         Response actualResult = sut.getAllPlaylists(VALID_TOKEN);
@@ -67,6 +68,11 @@ class PlaylistResourceTest {
 
         TracksDTO actualTracksDTO = (TracksDTO) actualResult.getEntity();
         assertEquals(testTracklist, actualTracksDTO);
+    }
+
+    @Test
+    void deletePlaylistSuccess() {
+        when(authenticationService.checkToken(any())).thenReturn(testToken);
     }
 
     @Test
