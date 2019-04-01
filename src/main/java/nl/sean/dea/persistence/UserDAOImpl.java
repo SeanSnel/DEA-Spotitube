@@ -82,7 +82,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new SpotitubePersistenceException();
         }
-        return new TokenDTO(username,token);
+        return new TokenDTO(username, token);
     }
 
     private TokenDTO insertTokenForNewUser(String username, String token) {

@@ -1,5 +1,6 @@
 package nl.sean.dea.service;
 
+import nl.sean.dea.dto.TrackDTO;
 import nl.sean.dea.dto.TracksDTO;
 import nl.sean.dea.persistence.TrackDAO;
 
@@ -26,5 +27,20 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TracksDTO getAllTracksFromPlaylist(int playlistID) {
         return trackDAO.getAllTracksFromPlaylist(playlistID);
+    }
+
+    @Override
+    public TracksDTO deleteTrackFromPlaylist(int trackid, int playlistID) {
+        return trackDAO.deleteTrackFromPlaylist(trackid, playlistID);
+    }
+
+    @Override
+    public TracksDTO addTrackToPlaylist(int playlistID, TrackDTO track) {
+        return trackDAO.addTrackToPlaylist(playlistID, track);
+    }
+
+    @Override
+    public TracksDTO getAllTracksNotInPlaylist(int playlistID) {
+        return trackDAO.getAllTracksNotInPlaylist(playlistID);
     }
 }
