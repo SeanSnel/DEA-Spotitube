@@ -1,6 +1,5 @@
 package nl.sean.dea.persistence;
 
-import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.TrackDTO;
 import nl.sean.dea.dto.TracksDTO;
 
@@ -20,7 +19,7 @@ public class TrackDAOImpl implements TrackDAO {
         try (
                 Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM track")
+                        "SELECT * FROM track JOIN track_in_playlist tip on track.track_ID = tip.track_ID")
         ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             foundTracks = getTracksFromResultset(resultSet);
@@ -36,7 +35,7 @@ public class TrackDAOImpl implements TrackDAO {
         try (
                 Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM track JOIN track_in_playlist ON track.track_ID = track_in_playlist.track_ID WHERE track_in_playlist.playlist_ID=?")
+                        "SELECT * FROM track JOIN track_in_playlist tip ON track.track_ID = tip.track_ID WHERE tip.playlist_ID=?")
         ) {
             preparedStatement.setInt(1, playlistID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,8 +68,58 @@ public class TrackDAOImpl implements TrackDAO {
     }
 
     @Override
-    public void updateTracksFromPlaylist(PlaylistDTO playlist) {
-        // TODO: implement update tracks
+    public TracksDTO deleteTrackFromPlaylist(int trackID, int playlistID) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "DELETE FROM track_in_playlist WHERE playlist_ID=? AND track_ID=?")
+        ) {
+            preparedStatement.setInt(1, playlistID);
+            preparedStatement.setInt(2, trackID);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return getAllTracksFromPlaylist(playlistID);
+    }
+
+    @Override
+    public TracksDTO addTrackToPlaylist(int playlistID, TrackDTO track) {
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "INSERT INTO track_in_playlist(track_ID, playlist_ID, offlineAvailable) VALUES (?,?,?)"
+                )) {
+            preparedStatement.setInt(1, track.getId());
+            preparedStatement.setInt(2, playlistID);
+            preparedStatement.setBoolean(3, track.isOfflineAvailable());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return getAllTracksFromPlaylist(playlistID);
+    }
+
+    @Override
+    public TracksDTO getAllTracksNotInPlaylist(int playlistID) {
+        List<TrackDTO> foundTracks;
+        try (
+                Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT *" +
+                                "FROM track " +
+                                "INNER JOIN track_in_playlist tip on track.track_ID = tip.track_ID " +
+                                "WHERE tip.track_ID NOT IN ( SELECT track_ID " +
+                                "                            FROM track_in_playlist " +
+                                "                            WHERE playlist_ID = ?);")
+        ) {
+            preparedStatement.setInt(1, playlistID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            foundTracks = getTracksFromResultset(resultSet);
+        } catch (SQLException e) {
+            throw new SpotitubePersistenceException();
+        }
+        return new TracksDTO(foundTracks);
     }
 
     private List<TrackDTO> getTracksFromResultset(ResultSet resultSet) throws SQLException {
@@ -78,15 +127,15 @@ public class TrackDAOImpl implements TrackDAO {
 
         while (resultSet.next()) {
             foundTracks.add(new TrackDTO(
-                    resultSet.getInt("track_ID"),
-                    resultSet.getString("title"),
-                    resultSet.getString("performer"),
-                    resultSet.getInt("duration"),
-                    resultSet.getString("album"),
-                    resultSet.getInt("playcount"),
-                    resultSet.getString("publicationDate"),
-                    resultSet.getString("description"),
-                    resultSet.getBoolean("offlineAvailable")));
+                    resultSet.getInt("track.track_ID"),
+                    resultSet.getString("track.title"),
+                    resultSet.getString("track.performer"),
+                    resultSet.getInt("track.duration"),
+                    resultSet.getString("track.album"),
+                    resultSet.getInt("track.playcount"),
+                    resultSet.getString("track.publicationDate"),
+                    resultSet.getString("track.description"),
+                    resultSet.getBoolean("tip.offlineAvailable")));
         }
 
         return foundTracks;

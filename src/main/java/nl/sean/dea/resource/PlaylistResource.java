@@ -2,6 +2,7 @@ package nl.sean.dea.resource;
 
 import nl.sean.dea.dto.PlaylistDTO;
 import nl.sean.dea.dto.TokenDTO;
+import nl.sean.dea.dto.TrackDTO;
 import nl.sean.dea.service.AuthenticationService;
 import nl.sean.dea.service.PlaylistService;
 import nl.sean.dea.service.TrackService;
@@ -47,7 +48,7 @@ public class PlaylistResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token){
+    public Response deletePlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token) {
         TokenDTO userToken = authenticationService.checkToken(token);
         return Response.ok(playlistService.deletePlaylist(userToken.getUser(), playlistID)).build();
     }
@@ -55,7 +56,7 @@ public class PlaylistResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPlaylist(PlaylistDTO playlist, @QueryParam("token") String token){
+    public Response addPlaylist(PlaylistDTO playlist, @QueryParam("token") String token) {
         TokenDTO userToken = authenticationService.checkToken(token);
         return Response.status(Response.Status.CREATED).entity(playlistService.addPlaylist(userToken.getUser(), playlist)).build();
     }
@@ -64,8 +65,23 @@ public class PlaylistResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editPlaylist(@PathParam("id") int playlistID, PlaylistDTO changedPlaylist, @QueryParam("token") String token){
+    public Response editPlaylist(@PathParam("id") int playlistID, PlaylistDTO changedPlaylist, @QueryParam("token") String token) {
         TokenDTO userToken = authenticationService.checkToken(token);
         return Response.ok(playlistService.editPlaylist(userToken.getUser(), playlistID, changedPlaylist)).build();
+    }
+
+    @DELETE
+    @Path("{playlistid}/tracks/{trackid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteTrackFromPlaylist(@PathParam("playlistid") int playlistID, @PathParam("trackid") int trackid, @QueryParam("token") String token) {
+        authenticationService.checkToken(token);
+        return Response.ok(trackService.deleteTrackFromPlaylist(trackid, playlistID)).build();
+    }
+
+    @POST
+    @Path("/{id}/tracks")
+    public Response addTrackToPlaylist(@PathParam("id") int playlistID, @QueryParam("token") String token, TrackDTO track) {
+        authenticationService.checkToken(token);
+        return Response.status(Response.Status.CREATED).entity(trackService.addTrackToPlaylist(playlistID, track)).build();
     }
 }
