@@ -24,13 +24,13 @@ import static org.mockito.Mockito.when;
 class PlaylistResourceTest {
 
     @Mock
-    PlaylistService playlistService;
+    PlaylistService playlistServiceMock;
 
     @Mock
-    AuthenticationService authenticationService;
+    AuthenticationService authenticationServiceMock;
 
     @Mock
-    TrackService trackService;
+    TrackService trackServiceMock;
 
     @InjectMocks
     private PlaylistResource sut;
@@ -43,14 +43,13 @@ class PlaylistResourceTest {
     private final PlaylistsDTO testPlaylistsDTO = new PlaylistsDTO(new ArrayList<>(Collections.singletonList(testPlaylist)), testLength);
     private final TokenDTO testToken = new TokenDTO("Sean", VALID_TOKEN);
 
-
     @Test
     void getAllPlaylistsSuccess() {
-        when(authenticationService.checkToken(any())).thenReturn(testToken);
-        when(playlistService.getAllPlaylists(any())).thenReturn(testPlaylistsDTO);
+        when(authenticationServiceMock.checkToken(any())).thenReturn(testToken);
+        when(playlistServiceMock.getAllPlaylists(any())).thenReturn(testPlaylistsDTO);
 
         Response actualResult = sut.getAllPlaylists(VALID_TOKEN);
-        verify(authenticationService).checkToken(VALID_TOKEN);
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
         assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
 
         PlaylistsDTO actualPlaylistsDTO = (PlaylistsDTO) actualResult.getEntity();
@@ -59,10 +58,10 @@ class PlaylistResourceTest {
 
     @Test
     void getTracksFromPlaylistSuccess() {
-        when(trackService.getAllTracksFromPlaylist(anyInt())).thenReturn(testTracklist);
+        when(trackServiceMock.getAllTracksFromPlaylist(anyInt())).thenReturn(testTracklist);
 
         Response actualResult = sut.getTracksFromPlaylist(1, VALID_TOKEN);
-        verify(authenticationService).checkToken(VALID_TOKEN);
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
 
         assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
 
@@ -72,7 +71,24 @@ class PlaylistResourceTest {
 
     @Test
     void deletePlaylistSuccess() {
-        when(authenticationService.checkToken(any())).thenReturn(testToken);
+        when(authenticationServiceMock.checkToken(any())).thenReturn(testToken);
+
+        Response actualResult = sut.deletePlaylist(1, VALID_TOKEN);
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
+        assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
+
+        verify(playlistServiceMock).deletePlaylist("Sean", 1);
+    }
+
+    @Test
+    void addPlaylistSuccess() {
+        when(authenticationServiceMock.checkToken(any())).thenReturn(testToken);
+
+        Response actualResult = sut.addPlaylist(testPlaylist, VALID_TOKEN);
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
+        assertEquals(Response.Status.CREATED.getStatusCode(), actualResult.getStatus());
+
+        verify(playlistServiceMock).addPlaylist("Sean", testPlaylist);
     }
 
     @Test
