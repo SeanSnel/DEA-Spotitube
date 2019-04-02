@@ -42,7 +42,7 @@ class TrackResourceTest {
 
         verify(authenticationServiceMock).checkToken(VALID_TOKEN);
         assertEquals(Response.Status.OK.getStatusCode(), actualResult.getStatus());
-        verify(trackServiceMock).getAllTracks();
+        verify(trackServiceMock).getAllTracksNotInPlaylist(1);
     }
 
     @Test

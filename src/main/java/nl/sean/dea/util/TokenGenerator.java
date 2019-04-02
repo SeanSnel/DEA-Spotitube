@@ -1,10 +1,8 @@
 package nl.sean.dea.util;
 
-import java.util.UUID;
+import javax.enterprise.inject.Default;
 
-public class TokenGenerator {
-
-    public String generateToken() {
-        return UUID.randomUUID().toString();
-    }
+@Default
+public interface TokenGenerator {
+    String generateToken();
 }
