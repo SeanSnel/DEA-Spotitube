@@ -12,8 +12,4 @@ public class TracksDTO {
     public List<TrackDTO> getTracks() {
         return tracks;
     }
-
-    public void setTracks(List<TrackDTO> tracks) {
-        this.tracks = tracks;
-    }
 }

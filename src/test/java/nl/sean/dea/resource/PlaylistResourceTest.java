@@ -26,23 +26,45 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PlaylistResourceTest {
 
-    private final String VALID_TOKEN = "1234";
     @Mock
     PlaylistService playlistServiceMock;
+
     @Mock
     AuthenticationService authenticationServiceMock;
+
     @Mock
     TrackService trackServiceMock;
+
     @InjectMocks
     private PlaylistResource sut;
+
+    private final String VALID_TOKEN = "1234";
     private PlaylistDTO testPlaylist;
+    private TrackDTO testTrack;
 
     @BeforeEach
     void setUp() {
-        TrackDTO testTrack = new TrackDTO(1, "test", "test", 1, "test", 1, "1990-01-01", "test", true);
+        testTrack = new TrackDTO();
+        final String test = "test";
+        testTrack.setId(1);
+        testTrack.setTitle(test);
+        testTrack.setPerformer(test);
+        testTrack.setDuration(1);
+        testTrack.setAlbum(test);
+        testTrack.setPlaycount(1);
+        testTrack.setPublicationDate("1990-01-01");
+        testTrack.setDescription(test);
+        testTrack.setOfflineAvailable(true);
+
         TracksDTO testTracklist = new TracksDTO(new ArrayList<>(Collections.singletonList(testTrack)));
-        testPlaylist = new PlaylistDTO(1, "Testlist", true, testTracklist.getTracks());
-        TokenDTO testToken = new TokenDTO("Sean", VALID_TOKEN);
+        testPlaylist = new PlaylistDTO();
+        testPlaylist.setId(1);
+        testPlaylist.setName("Testlist");
+        testPlaylist.setOwner(true);
+        testPlaylist.setTracks(testTracklist.getTracks());
+        TokenDTO testToken = new TokenDTO();
+        testToken.setToken(VALID_TOKEN);
+        testToken.setUser("Sean");
 
         when(authenticationServiceMock.checkToken(any())).thenReturn(testToken);
     }
@@ -92,4 +114,21 @@ class PlaylistResourceTest {
         verify(playlistServiceMock).editPlaylist("Sean", 1, testPlaylist);
     }
 
+    @Test
+    void deleteTrackFromPlaylistSuccess() {
+        Response actualresult = sut.deleteTrackFromPlaylist(1, 1, VALID_TOKEN);
+
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
+        assertEquals(Response.Status.OK.getStatusCode(), actualresult.getStatus());
+        verify(trackServiceMock).deleteTrackFromPlaylist(1, 1);
+    }
+
+    @Test
+    void addTrackToPlaylistSuccess() {
+        Response actualResult = sut.addTrackToPlaylist(1, VALID_TOKEN, testTrack);
+
+        verify(authenticationServiceMock).checkToken(VALID_TOKEN);
+        assertEquals(Response.Status.CREATED.getStatusCode(), actualResult.getStatus());
+        verify(trackServiceMock).addTrackToPlaylist(1, testTrack);
+    }
 }

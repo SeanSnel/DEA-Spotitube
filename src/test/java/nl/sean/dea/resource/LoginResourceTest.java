@@ -28,7 +28,9 @@ class LoginResourceTest {
 
     @Test
     void loginSuccess() {
-        UserDTO user = new UserDTO("Sean", "test");
+        UserDTO user = new UserDTO();
+        user.setUser("Sean");
+        user.setPassword("test");
         when(authenticationService.login(user)).thenReturn(new TokenDTO("Sean", "1234"));
 
         Response actualResult = sut.loginUser(user);

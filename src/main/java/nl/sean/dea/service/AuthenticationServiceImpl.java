@@ -4,6 +4,7 @@ import nl.sean.dea.dto.TokenDTO;
 import nl.sean.dea.dto.UserDTO;
 import nl.sean.dea.persistence.UserDAO;
 import nl.sean.dea.util.TokenGenerator;
+import nl.sean.dea.util.TokenGeneratorImpl;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -12,14 +13,15 @@ import javax.inject.Inject;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private UserDAO userDAO;
-    private TokenGenerator tokenGenerator = new TokenGenerator();
+    private TokenGenerator tokenGenerator;
 
     public AuthenticationServiceImpl() {
     }
 
     @Inject
-    public AuthenticationServiceImpl(UserDAO userDAO) {
+    public AuthenticationServiceImpl(UserDAO userDAO, TokenGenerator tokenGenerator) {
         this.userDAO = userDAO;
+        this.tokenGenerator = tokenGenerator;
     }
 
     @Override
