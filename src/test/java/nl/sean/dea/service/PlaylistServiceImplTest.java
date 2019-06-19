@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +44,7 @@ class PlaylistServiceImplTest {
 
     @Test
     void getAllPlaylistsCalled() {
-        when(playlistDAOMock.getAllPlaylists(any())).thenReturn(testPlaylistList);
+        when(playlistDAOMock.getAllPlaylists(anyString())).thenReturn(testPlaylistList);
 
         PlaylistsDTO actualResult = sut.getAllPlaylists("Sean");
 
@@ -54,30 +54,45 @@ class PlaylistServiceImplTest {
 
     @Test
     void getPlaylistByIdCalled() {
-        sut.getPlaylist("Sean", 1);
+        when(playlistDAOMock.getPlaylist(anyString(), anyInt())).thenReturn(testPlaylist);
+
+        PlaylistDTO actualResult = sut.getPlaylist("Sean", 1);
 
         verify(playlistDAOMock).getPlaylist("Sean", 1);
+
+        assertEquals(1, actualResult.getTracks().size());
     }
 
     @Test
     void deletePlaylistCalled() {
-        sut.deletePlaylist("Sean", 1);
+        when(playlistDAOMock.deletePlaylist(anyString(), anyInt())).thenReturn(testPlaylistList);
+
+        PlaylistsDTO actualResult = sut.deletePlaylist("Sean", 1);
 
         verify(playlistDAOMock).deletePlaylist("Sean", 1);
+
+        assertEquals(1, actualResult.getPlaylists().size());
     }
 
     @Test
     void addPlaylistCalled() {
-        sut.addPlaylist("Sean", testPlaylist);
+        when(playlistDAOMock.addPlaylist(anyString(), any(PlaylistDTO.class))).thenReturn(testPlaylistList);
+
+        PlaylistsDTO actualResult = sut.addPlaylist("Sean", testPlaylist);
 
         verify(playlistDAOMock).addPlaylist("Sean", testPlaylist);
+
+        assertEquals(1, actualResult.getPlaylists().size());
     }
 
     @Test
     void editPlaylistCalled() {
-        sut.editPlaylist("Sean", 1, testPlaylist);
+        when(playlistDAOMock.editPlaylist(anyString(), anyInt(), any(PlaylistDTO.class))).thenReturn(testPlaylistList);
+
+        PlaylistsDTO actualResult = sut.editPlaylist("Sean", 1, testPlaylist);
 
         verify(playlistDAOMock).editPlaylist("Sean", 1, testPlaylist);
+        assertEquals(1, actualResult.getPlaylists().size());
     }
 
     @Test

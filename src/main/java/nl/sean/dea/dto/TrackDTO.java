@@ -62,6 +62,30 @@ public class TrackDTO {
         this.publicationDate = publicationDate;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPerformer() {
+        return performer;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public int getPlaycount() {
+        return playcount;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

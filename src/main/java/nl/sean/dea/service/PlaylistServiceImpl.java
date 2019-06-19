@@ -43,16 +43,22 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public PlaylistsDTO deletePlaylist(String username, int playlistID) {
-        return playlistDAO.deletePlaylist(username, playlistID);
+        PlaylistsDTO playlistsDTO = playlistDAO.deletePlaylist(username, playlistID);
+        playlistsDTO.setLength(calculateTotalDuration(playlistsDTO.getPlaylists()));
+        return playlistsDTO;
     }
 
     @Override
     public PlaylistsDTO addPlaylist(String username, PlaylistDTO playlist) {
-        return playlistDAO.addPlaylist(username, playlist);
+        PlaylistsDTO playlistsDTO = playlistDAO.addPlaylist(username, playlist);
+        playlistsDTO.setLength(calculateTotalDuration(playlistsDTO.getPlaylists()));
+        return playlistsDTO;
     }
 
     @Override
     public PlaylistsDTO editPlaylist(String username, int playlistID, PlaylistDTO changedPlaylist) {
-        return playlistDAO.editPlaylist(username, playlistID, changedPlaylist);
+        PlaylistsDTO playlistsDTO = playlistDAO.editPlaylist(username, playlistID, changedPlaylist);
+        playlistsDTO.setLength(calculateTotalDuration(playlistsDTO.getPlaylists()));
+        return playlistsDTO;
     }
 }

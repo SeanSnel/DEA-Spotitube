@@ -127,15 +127,15 @@ public class TrackDAOImpl implements TrackDAO {
 
         while (resultSet.next()) {
             foundTracks.add(new TrackDTO(
-                    resultSet.getInt("track.track_ID"),
-                    resultSet.getString("track.title"),
-                    resultSet.getString("track.performer"),
-                    resultSet.getInt("track.duration"),
-                    resultSet.getString("track.album"),
-                    resultSet.getInt("track.playcount"),
-                    resultSet.getString("track.publicationDate"),
-                    resultSet.getString("track.description"),
-                    resultSet.getBoolean("tip.offlineAvailable")));
+                    resultSet.getInt("track_ID"),
+                    resultSet.getString("title"),
+                    resultSet.getString("performer"),
+                    resultSet.getInt("duration"),
+                    resultSet.getString("album"),
+                    resultSet.getInt("playcount"),
+                    resultSet.getString("publicationDate"),
+                    resultSet.getString("description"),
+                    resultSet.getBoolean("offlineAvailable")));
         }
 
         return foundTracks;
