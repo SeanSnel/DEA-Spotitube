@@ -18,6 +18,10 @@ public class PlaylistDTO {
         this.tracks = tracks;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getDuration() {
         int duration = 0;
         for (TrackDTO track : tracks) {

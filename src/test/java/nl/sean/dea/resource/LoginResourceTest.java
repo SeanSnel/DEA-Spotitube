@@ -46,7 +46,7 @@ class LoginResourceTest {
         when(authenticationService.login(any(UserDTO.class))).thenThrow(new SpotitubeAuthenticationException("Invalid user."));
 
         SpotitubeAuthenticationException spotitubeAuthenticationException = assertThrows(SpotitubeAuthenticationException.class, () -> {
-            Response actualResult = sut.loginUser(new UserDTO("Sean", "wrongPassword"));
+            sut.loginUser(new UserDTO("Sean", "wrongPassword"));
         });
 
         assertEquals("Invalid user.", spotitubeAuthenticationException.getMessage());

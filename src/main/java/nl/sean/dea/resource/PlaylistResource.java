@@ -19,8 +19,7 @@ public class PlaylistResource {
     private TrackService trackService;
     private AuthenticationService authenticationService;
 
-    public PlaylistResource() {
-    }
+    public PlaylistResource() {}
 
     @Inject
     public PlaylistResource(PlaylistService playlistService, TrackService trackService, AuthenticationService authenticationService) {
